@@ -31,17 +31,19 @@ CURRENT LIMITATIONS AND KNOWN BUGS:
 DEPENDENCIES & REQUIRED PACKAGES:
 
 - Standard Python packages: numpy, scipy, matplotlib, math, argparse, sys, os, multiprocessing, time, readcol
-- The MCMC uses emcee
-- The photometric models are produced by either batman or jktebop
-- The radial velocity models for eccentric orbits are produced by RadVel
+- The MCMC uses [emcee](http://dfm.io/emcee/current/) ([Foreman-Mackey et al. 2013](https://ui.adsabs.harvard.edu/#abs/2013PASP..125..306F/abstract))
+- The photometric models are produced by either [batman](https://astro.uchicago.edu/~kreidberg/batman/index.html) ([Kreidberg 2015](https://ui.adsabs.harvard.edu/#abs/2015PASP..127.1161K/abstract)) or [jktebop](http://www.astro.keele.ac.uk/jkt/codes/jktebop.html)
+- The radial velocity models for eccentric orbits are produced by [RadVel](https://radvel.readthedocs.io/en/latest/) ([Fulton et al. 2018](http://adsabs.harvard.edu/abs/2018PASP..130d4504F))
 - The Doppler tomographic and line profile models are produced by horus (to be included in this repository)
-- The Gaussian process regression is performed by either george or celerite
+- The Gaussian process regression is performed by either [george](http://dfm.io/george/current/) ([Ambikasaran et al. 2015](https://ui.adsabs.harvard.edu/#abs/2015ITPAM..38..252A/abstract)) or [celerite](https://celerite.readthedocs.io/en/stable/#) ([Foreman-Mackey et al. 2017](https://ui.adsabs.harvard.edu/#abs/2017AJ....154..220F/abstract))
 - Importing Doppler tomographic data requires either idlsave or pickle, depending upon the input format
 
 SHORT INSTRUCTIONS:
 
 The code is typicaly run from the command line as:
-"python misttborn.py input.filename -p -v"
+```
+python misttborn.py input.filename -p -v
+```
 to, for example, run a fit only to photometric data. input.filename is the name of a file containing various input parameters for the code, which is described in detail below.
 
 FULL LIST OF COMMAND-LINE FLAGS:
@@ -138,3 +140,16 @@ STRUCTURE OF OUTPUT FILES:
 - Two other types of file can be produced if specified in the input file:
 - plotfile: if the code is called with the --plotbest option, the code will produce plots of the best-fit solution in a PDF file with this filename. If --startnew is specified, the plots will show the model corresponding to the starting parameters instead of the best-fit solution.
 - asciiout: if specified, in addition to the numpy save file containing the MCMC chains, the code will also produced an ascii-formatted table listing all of the parameters at each MCMC step.
+
+PAPERS USING MISTTBORN:
+A number of papers have used MISTTBORN, although early versions were not named as such in the literature.
+- A. C. Rizzuto et al. "Zodiacal Exoplanets in Time (ZEIT). VIII. A Two-planet System in Praesepe from K2 Campaign 16" [2018, AJ, 156, 195](http://adsabs.harvard.edu/abs/2018AJ....156..195R)
+- M. C. Johnson et al. "K2-260 b: a hot Jupiter transiting an F star, and K2-261 b: a warm Saturn around a bright G star" [2018, MNRAS, 481, 596](http://adsabs.harvard.edu/abs/2018MNRAS.481..596J)
+- M. C. Johnson et al. "Spin-Orbit Misalignments of Three Jovian Planets via Doppler Tomography" [2017, AJ, 154, 137](http://adsabs.harvard.edu/abs/2017AJ....154..137J)
+- A. W. Mann et al. "The Gold Standard: Accurate Stellar and Planetary Parameters for Eight Kepler M Dwarf Systems Enabled by Parallaxes" [2017, AJ, 153, 267](http://adsabs.harvard.edu/abs/2017AJ....153..267M)
+- A. W. Mann et al. "Zodiacal Exoplanets in Time (ZEIT). III. A Short-period Planet Orbiting a Pre-main-sequence Star in the Upper Scorpius OB Association" [2016, AJ, 152, 61](http://adsabs.harvard.edu/abs/2016AJ....152...61M)
+- A. W. Mann et al. "Zodiacal Exoplanets in Time (ZEIT). I. A Neptune-sized Planet Orbiting an M4.5 Dwarf in the Hyades Star Cluster" [2016, ApJ, 818, 46](http://adsabs.harvard.edu/abs/2016ApJ...818...46M)
+If you use MISTTBORN in a publication please let me know (johnson dot 7240 at osu dot edu) so that I can add it to this list.
+
+ACKNOWLEDGMENTS: 
+Andrew Mann helped to write these instructions. Thanks to Andrew Mann, Pa Chia Thao, Fei Dai, Elisabeth Newton, and Aaron Rizzuto for various contributions, bug reports, feature requests, etc.
