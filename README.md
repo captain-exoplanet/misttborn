@@ -1,5 +1,5 @@
 # misttborn
-MISTTBORN is a Python code for fitting various exoplanet and stellar datasets. This code has been developed mostly by Marshall Johnson. Note that the code is in many ways still a work in progress; not all planned features have been implemented, and while the code works for every case I have thrown at it yet, I have not rigorously tested it in edge cases. Bug reports appreciated!
+MISTTBORN (MCMC Interface for Synthesis of Transits, Tomography, Binaries, and Others of a Relevant Nature) is a Python code for fitting various exoplanet and stellar datasets. This code has been developed mostly by Marshall Johnson. Note that the code is in many ways still a work in progress; not all planned features have been implemented, and while the code works for every case I have thrown at it yet, I have not rigorously tested it in edge cases. Bug reports appreciated!
 
 NOTE: This repository is still being populated! Some code may be missing and the instructions may be incomplete.
 
