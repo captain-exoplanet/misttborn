@@ -1,6 +1,6 @@
 ### MISTTBORNPLOTTER
 
-misttbornplotter.py is a code to produce publication-quality plots and tables from the MCMC chains output by misttborn.py, using the best-fit parameter values found by the MCMC.
+[misttbornplotter.py](./misttbornplotter.py) is a code to produce publication-quality plots and tables from the MCMC chains output by misttborn.py, using the best-fit parameter values found by the MCMC.
 
 FEATURES:
 
@@ -13,6 +13,7 @@ FEATURES:
 CURRENT LIMITATION & KNOWN BUGS:
 
 - Currently MISTTBORNplotter.py will not work properly for RV plots for multiplanet systems; it won’t subtract the best-fit RV models from the other planets from the data. I’ll fix this when this feature is needed.
+- Currently the RV plotting capabilities can only handle up to five separate RV facilities.
 - Trailing zeros at the end of a value will not be printed to the table due to a limitation of Python; i.e., if a value is 0.10 +/- 0.12, it will be printed as 0.1 +/- 0.12
 - The number will be printed to one digit after the decimal place if the uncertainty is greater than 10, i.e., it will print 2106.6 +/- 15.7 rather than 2107 +/- 16
 - For RV-only planets the semi-major axis needs to be calculated using Kepler’s laws rather than using a/R*; this has not yet been implemented. 
@@ -25,7 +26,7 @@ DEPENDENCIES & REQUIRED PACKAGES:
 - [corner](https://corner.readthedocs.io/en/latest/) if corner plots are to be made with the --corner command-line flag.
 - [uncertainties](https://pythonhosted.org/uncertainties/) if the code is to calculate the absolute planetary parameters.
 
-SHORT INSTRUCTIONs:
+SHORT INSTRUCTIONS:
 
 In general, MISTTBORNplotter should be run with the same set of flags as you used for your MISTTBORN run. That is, if you ran MISTTBORN as:
 ```
@@ -85,6 +86,8 @@ MISTTBORNplotter should be used with the same input file as MISTTBORN. However, 
 - epRstar, emRstar:    positive and negative uncertainties on Mstar, respectively
 - Teff:    Stellar effective temperature, in K
 - eTeff:    Uncertainty on Teff; asymmetric uncertainties are not supported at the present time
+- timestandard: String containing the name of the time standard used for the data; if unspecified, BJD will be assumed, unless the value of the first timestamp is less than 4000, in which case BKJD (i.e., BJD-2454833) will be assumed. This will be used as the units for the epochs listed in the output table, and axis labels for plots showing the full time-series of RVs or photometry.
+- timeoffset: The number which has been subtracted from timestandard in order to produce the timestamps used in the input data, i.e., if the input data are in BJD-2450000, then timestandard should be set to BJD and timeoffset to 2450000. If unspecified, the code will check the data, and will assume 0 if the value of the first timestamp is greater than 2000000; 2400000 if the value of the first timestamp is greater than 50000; 2450000 if it is greater than 4000; and 2454833 (i.e., BKJD) otherwise.
 
 If some or all of Mstar, Rstar, and Teff and associated uncertainties are specified in the input file, the code will calculate the corresponding absolute planetary parameters and print these to the LaTeX output file.
 
