@@ -44,6 +44,7 @@ parser.add_argument("--dilution", action="store_true", help="account for dilutio
 parser.add_argument("--dosecondary", action="store_true", help="make plots for the secondary of an eclipsing binary")
 parser.add_argument("--bestprob", action="store_true", help="Plot the values for the best-fit model rather than the posterior median.")
 parser.add_argument("--fullLC", action="store_true", help="Make a plot showing the full light-curve; this is really only useful for space-based data with continuous coverage.")
+parser.add_argument("--rvlegend", action="store_true", help="Show a legend of which point is which dataset on the RV plots")
 args=parser.parse_args()
 
 
@@ -1764,6 +1765,10 @@ if args.rvs:
     rands=np.random.random_integers(0,len(samples[:,0]),50)
     fig=pl.figure(figsize=(8.0,6.0))
     if args.plotresids: rresids=np.array(data['rv'])
+    if args.rvlegend:
+        rvlabels=np.array(invals[[i for i, s in enumerate(index) if 'rvlabel' in s]], dtype=str)
+    else:
+        rvlabels=np.zeros(rndatasets,dtype=str)
     for j in range (0,50):
 
         if any('sinw' in s for s in inposindex) or any('ecc' in s for s in inposindex):
@@ -1881,8 +1886,8 @@ if args.rvs:
                             pl.errorbar(np.mod(allrvtimes[thisdataset]-parstruc['epoch'+str(i+1)],parstruc['Per'+str(i+1)]),data['rv'][thisdataset]-struc1['gamma'+str(k+1)], yerr=data['rverror'][thisdataset],fmt='none',ecolor=rvcolors[k])
 
 
-
-
+                if args.rvlegend:
+                    pl.legend()
 
                 if args.ms:
                     pl.ylabel('RV (m s$^{-1}$)',fontsize=16)
@@ -1958,6 +1963,8 @@ if args.rvs:
                 pl.plot(allrvtimes[thisdataset],data['rv'][thisdataset]-struc1['gamma'+str(k+1)],rvsymbols[k],color=rvcolors[k])
                 pl.errorbar(allrvtimes[thisdataset],data['rv'][thisdataset]-struc1['gamma'+str(k+1)], yerr=data['rverror'][thisdataset],fmt='none',ecolor=rvcolors[k])
             
+        if args.rvlegend:
+            pl.legend()
         if offset == 0.:
             pl.xlabel(timestandard,fontsize=14)
         else:
