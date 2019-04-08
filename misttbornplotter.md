@@ -72,7 +72,8 @@ MISTTBORNplotter takes many of the same flags as MISTTBORN, along with additiona
 - --tableonly: produce only a LaTeX output table and terminate the code before making any plots.
 - --bw: have the output plots be in grayscale rather than color
 - --dosecondary: if the --binary flag is used, make plots showing both the primary and secondary eclipses.
-- --fullLC: Make a plot showing the full light-curve; this is really only useful for space-based data with continuous coverage.
+- --fullLC: make a plot showing the full light-curve; this is really only useful for space-based data with continuous coverage.
+- --rvlegend: include a legend on the RV plots showing which data points are from which facility/dataset; requires that the rvlabel# parameters be specified in the input file.
 
 INPUT FILE PARAMETERS:
 
@@ -80,6 +81,7 @@ MISTTBORNplotter should be used with the same input file as MISTTBORN. However, 
 
 - photlabel#: a label for the photometric dataset which will be printed next to the corresponding light curve in the photometry plot. Note that due to a limitation of the input format, any spaces which should appear in the label should be replaced with colons in the input file. E.g., if the label should read "DEMONEXT g-band," the photlabel# parameter should be "DEMONEXT:g-band."
 - photname#: the band in which the data were obtained, which is used to color the light curve correspondingly. If this is not specified the light curve will be shown in black. The currently supported bands are: Kp CoRoT clear g r i z U B V R I J H K  3.8um 4.5um
+- rvlabel#: a label for the RV dataset which will be included in a legend in the RV plots if the --rvlegend command-line keyword is specified
 - Mstar:    Stellar mass in MSun
 - epMstar, emMstar:    positive and negative uncertainties on Mstar, respectively
 - Rstar:    Stellar radius in RSun
