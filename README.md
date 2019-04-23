@@ -7,3 +7,4 @@ Contents of this repository:
 - [misttborn.py](./misttborn.py) The actual fitting code, instructions and documentation are [here](./misttborn.md)
 - [misttbornplotter.py](./misttbornplotter.py) is a code to produce publication-quality plots from the MCMC output of MISTTBORN. Instructions and documentation are [here](./misttbornplotter.md)
 - [examples](./examples) contains various example input files and datasets to demonstrate how to set up MISTTBORN.
+- [kernels](./kernels) contains kernels for Gaussian process regression with the [celerite package](https://celerite.readthedocs.io/en/stable/#).
