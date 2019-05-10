@@ -45,6 +45,8 @@ parser.add_argument("--dosecondary", action="store_true", help="make plots for t
 parser.add_argument("--bestprob", action="store_true", help="Plot the values for the best-fit model rather than the posterior median.")
 parser.add_argument("--fullLC", action="store_true", help="Make a plot showing the full light-curve; this is really only useful for space-based data with continuous coverage.")
 parser.add_argument("--rvlegend", action="store_true", help="Show a legend of which point is which dataset on the RV plots")
+parser.add_argument("--makereport", action="store_true", help="Make a PDF report including the parameter table and all of the plots")
+
 args=parser.parse_args()
 
 
@@ -919,6 +921,13 @@ if args.bestprob:
 
 for k in range (0,nplanets):
     f=open(sysname+'_table'+str(k+1)+'.tex','w')
+    f.write('\\begin{table} \n')
+    f.write('\\caption{Parameters of '+sysname+'} \n')
+    f.write('\\begin{tabular}{lc} \n')
+    f.write('\\hline \n')
+    f.write('\\hline \n')
+    f.write('Parameter & Value \\\ \n')
+    f.write('\\hline \n')
     f.write('Measured Parameters \\\ \n')
 
     for i in range (0,ndim):
@@ -1243,7 +1252,9 @@ for k in range (0,nplanets):
     
             
     
-
+    f.write('\\hline \n')
+    f.write('\\end{tabular} \n')
+    f.write('\\end{table} \n')
     f.close()
     print 'The table for planet '+str(k+1)+' is complete at '+sysname+'_table'+str(k+1)+'.tex'
 
@@ -1982,6 +1993,79 @@ if args.rvs:
 
     print 'The all RV plot for planet '+str(i+1)+' is complete at '+sysname+'RVall'+str(i+1)+'.pdf'
 
+if args.makereport:
+    
+    f=open(sysname+'_report.tex','w')
+    f.write('\\documentclass{article} \n')
+    f.write('\\usepackage{graphicx} \n')
+    f.write('\\usepackage{graphics} \n')
+    f.write('\\begin{document} \n')
+    for k in range (0,nplanets):
+        f.write('\\input{'+sysname+'_table'+str(k+1)+'} \n')
+    f.write('\\newpage \n')
+    if not args.tableonly:
+        if args.photometry:
+            for k in range (0,nplanets):
+                f.write('\\begin{figure} \n')
+                f.write('\\centering \n')
+                f.write('\\includegraphics[width=1.0\\textwidth]{'+sysname+'LC'+str(k+1)+'.pdf} \n')
+                f.write('\\caption{Phased light curve of planet '+str(k+1)+'.} \n')
+                f.write('\\end{figure} \n')
+            if args.gp and any('gpmodtypep' in s for s in data['gpmodtype']):
+                f.write('\\begin{figure} \n')
+                f.write('\\centering \n')
+                f.write('\\includegraphics[width=1.0\\textwidth]{'+sysname+'GPLC.pdf} \n')
+                f.write('\\caption{Gaussian process fit to the full light curve.} \n')
+                f.write('\\end{figure} \n')
+
+        if args.rvs:
+            for i in range (0,nplanets):
+                f.write('\\begin{figure} \n')
+                f.write('\\centering \n')
+                f.write('\\includegraphics[width=1.0\\textwidth]{'+sysname+'RVphased'+str(i+1)+'.pdf} \n')
+                f.write('\\caption{RV measurements phased to the orbit of planet '+str(i+1)+'.} \n')
+                f.write('\\end{figure} \n')
+
+            f.write('\\begin{figure} \n')
+            f.write('\\centering \n')
+            f.write('\\includegraphics[width=1.0\\textwidth]{'+sysname+'RVall1.pdf} \n')
+            f.write('\\caption{All RV measurements along with the best-fit models for all planets.} \n')
+            f.write('\\end{figure} \n')
+            
+
+        if args.tomography:
+            for i in range(0,ntomsets):
+                f.write('\\begin{figure} \n')
+                f.write('\\centering \n')
+                f.write('\\includegraphics[width=1.0\\textwidth]{'+sysname+'DTdata'+str(i+1)+'.pdf} \\\ \n')
+                f.write('\\includegraphics[width=1.0\\textwidth]{'+sysname+'DTmodel'+str(i+1)+'.pdf} \\\ \n')
+                f.write('\\includegraphics[width=1.0\\textwidth]{'+sysname+'DTresids'+str(i+1)+'.pdf} \\\ \n')
+                f.write('\\caption{Doppler tomographic data from dataset '+str(i+1)+'. Top: data. Middle: model. Bottom: residuals.} \n')
+                f.write('\\end{figure} \n')
+            if ntomsets > 1:
+                f.write('\\begin{figure} \n')
+                f.write('\\centering \n')
+                f.write('\\includegraphics[width=1.0\\textwidth]{'+sysname+'DTdataall.pdf} \\\ \n')
+                f.write('\\includegraphics[width=1.0\\textwidth]{'+sysname+'DTmodelall.pdf} \\\ \n')
+                f.write('\\includegraphics[width=1.0\\textwidth]{'+sysname+'DTresidsall.pdf} \\\ \n')
+                f.write('\\caption{Combined Doppler tomographic data. Top: data. Middle: model. Bottom: residuals.} \n')
+                f.write('\\end{figure} \n')
+
+        if args.corner:
+            f.write('\\begin{figure} \n')
+            f.write('\\centering \n')
+            f.write('\\includegraphics[width=1.0\\textwidth]{'+sysname+'_corner.pdf} \n')
+            f.write('\\caption{Corner plot for the MCMC.} \n')
+            f.write('\\end{figure} \n')
+                    
+                    
+
+    f.write('\\end{document}')
+    f.close()
+        
+            
+    os.system('pdflatex '+sysname+'_report.tex')
+    os.system('pdflatex '+sysname+'_report.tex')
         
 
     
