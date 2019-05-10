@@ -52,6 +52,7 @@ The name of the system should be specified using the sysname parameter in the in
 - sysnameDTdata#.pdf (optional): if the -t --tomography flag is specified, a plot showing the Doppler tomographic data in the form of time series line profile residuals from tomographic dataset #.
 - sysnameDTmodel#.pdf (optional): if the -t --tomography flag is specified, a plot showing the best-fit Doppler tomographic model for tomographic dataset #. 
 - sysnameDTresids#.pdf (optional): if the -t --tomography flag is specified, a plot showing the residuals to the best-fit Doppler tomographic model for tomographic dataset #. 
+- sysname_report.pdf (optional): if the --makereport flag is specified, a document containing the parameter table and all of the above plots which are produced by this run of the code.
 
 FULL LIST OF COMMAND-LINE FLAGS:
 
