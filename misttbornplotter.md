@@ -22,9 +22,10 @@ CURRENT LIMITATION & KNOWN BUGS:
 
 DEPENDENCIES & REQUIRED PACKAGES:
 
-- Same packages required by MISTTBORN
+- Same packages required by MISTTBORN.
 - [corner](https://corner.readthedocs.io/en/latest/) if corner plots are to be made with the --corner command-line flag.
 - [uncertainties](https://pythonhosted.org/uncertainties/) if the code is to calculate the absolute planetary parameters.
+- Using the --makereport keyword requires a working PDFLaTeX installation.
 
 SHORT INSTRUCTIONS:
 
@@ -74,6 +75,7 @@ MISTTBORNplotter takes many of the same flags as MISTTBORN, along with additiona
 - --dosecondary: if the --binary flag is used, make plots showing both the primary and secondary eclipses.
 - --fullLC: make a plot showing the full light-curve; this is really only useful for space-based data with continuous coverage.
 - --rvlegend: include a legend on the RV plots showing which data points are from which facility/dataset; requires that the rvlabel# parameters be specified in the input file.
+- --makereport: produce a PDF report containing the parameter table and all of the plots produced by the code.
 
 INPUT FILE PARAMETERS:
 
