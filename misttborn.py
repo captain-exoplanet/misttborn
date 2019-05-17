@@ -1276,7 +1276,7 @@ def lnlike(theta, parstruc, data, nplanets, inposindex, instruc, args):
                 #need to convert transit epoch to epoch of periastron
                 #equations from https://exoplanetarchive.ipac.caltech.edu/docs/transit_algorithms.html#epoch_periastron
                 if args.photometry:
-                    ftransit=np.pi/2.-omega[i]*np.pi/180.-np.pi #true anomaly at transit
+                    ftransit=np.pi/2.-omega[i]*np.pi/180. #true anomaly at transit
                     Etransit=2.*np.arctan(np.sqrt((1.-ecc[i])/(1.+ecc[i]))*np.tan(ftransit/2.)) #eccentric anomaly at transit
                     timesince=parstruc['Per'+str(i+1)]/(2.*np.pi)*(Etransit-ecc[i]*np.sin(Etransit)) #time since periastron to transit
                 else:
