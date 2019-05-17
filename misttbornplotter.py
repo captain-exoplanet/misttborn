@@ -1414,9 +1414,9 @@ if args.photometry:
     for i in range (0,nplanets):
         pp = PdfPages(sysname+'LC'+str(i+1)+'.pdf')
         phased = np.mod(data['ptime']-parstruc['epoch'+str(i+1)], parstruc['Per'+str(i+1)])
-        fsecondary=np.pi/2.-(omega[i])*np.pi/180.-np.pi #true anomaly at secondary eclipse
-        Esecondary=2.*np.arctan(np.sqrt((1.-ecc[i])/(1.+ecc[i]))*np.tan(fsecondary/2.)) #eccentric anomaly at secondary eclipse
-        timesince=parstruc['Per'+str(i+1)]/(2.*np.pi)*(Esecondary-ecc[i]*np.sin(Esecondary))
+        ftransit=np.pi/2.-(omega[i])*np.pi/180. #true anomaly at transit 
+        Etransit=2.*np.arctan(np.sqrt((1.-ecc[i])/(1.+ecc[i]))*np.tan(ftransit/2.)) #eccentric anomaly at secondary eclipse
+        timesince=parstruc['Per'+str(i+1)]/(2.*np.pi)*(Etransit-ecc[i]*np.sin(Etransit))
         timesince*=24.
         highs = np.where(phased > parstruc['Per'+str(i+1)]/2.0)
         phased[highs]-=parstruc['Per'+str(i+1)]
@@ -1948,7 +1948,7 @@ if args.rvs:
 
     
     for i in range(0,nplanets):
-        if not args.photometry:
+        if args.photometry:
             ftransit=np.pi/2.-omega[i]*np.pi/180.
             Etransit=2.*np.arctan(np.sqrt((1.-ecc[i])/(1.+ecc[i]))*np.tan(ftransit/2.))
             timesince=parstruc['Per'+str(i+1)]/(2.*np.pi)*(Etransit-ecc[i]*np.sin(Etransit))
